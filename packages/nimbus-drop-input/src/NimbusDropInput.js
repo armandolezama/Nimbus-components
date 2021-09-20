@@ -1,10 +1,9 @@
-
 import { html, LitElement } from 'lit';
-import styles from './NimbusDropInputStyles.js';
+import { cssObject, getStyle } from './NimbusDropInputStyles.js';
 
 export class NimbusDropInput extends LitElement {
   static get styles() {
-    return styles;
+    return cssObject;
   }
 
   static get properties() {
@@ -23,39 +22,31 @@ export class NimbusDropInput extends LitElement {
       pattern: { type: String },
       _inputStatus: { type: String },
       _whiteSpacePattern: { type: String },
+      _inputvalidator: { type: Object },
     };
   }
-  
+
   /**
    * @param {Number} value
    */
-  set maxLength (value) {
-    if(value === 0){
+  set maxLength(value) {
+    if (value === 0) {
       this._maxLength = null;
     } else {
       this._maxLength = value;
-    };
+    }
   }
 
   /**
    * @param {Number} value
    */
-   set minLength (value) {
-    if(value === 0){
+  set minLength(value) {
+    if (value === 0) {
       this._minLength = null;
     } else {
       this._minLength = value;
-    };
+    }
   }
-
-  /**
-   * @param {String} value
-   */
-  set pattern (value) {
-    this._pattern = value;
-    
-    this._inputvalidator = value !== '' ? new RegExp(this.pattern) : new RegExp('([^s])');
-  };
 
   constructor() {
     super();
@@ -74,11 +65,20 @@ export class NimbusDropInput extends LitElement {
     this._inputStatus = '';
     this._whiteSpacePattern = '';
     this._inputvalidator = {};
+    this.inputStyle = {
+      fontSize: '10rem',
+    };
+  }
+
+  firstUpdated() {
+    super.firstUpdated();
+    this._inputvalidator = this.pattern !== '' ? new RegExp(this.pattern) : new RegExp('([^s])');
   }
 
   _createInputTag() {
     return html`
       <input
+        style=${getStyle('#input-tag')}
         id="input-tag"
         status="${this._inputStatus}"
         max="${this.max}"
