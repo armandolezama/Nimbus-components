@@ -1,5 +1,5 @@
 import { html, LitElement } from 'lit';
-import { cssObject, getStyle } from './NimbusDropInputStyles.js';
+import { cssObject, getStyle, styleTagHTML } from './NimbusDropInputStyles.js';
 
 export class NimbusDropInput extends LitElement {
   static get styles() {
@@ -78,7 +78,7 @@ export class NimbusDropInput extends LitElement {
   _createInputTag() {
     return html`
       <input
-        style=${getStyle('#input-tag')}
+        style="${getStyle('#input-tag')}"
         id="input-tag"
         status="${this._inputStatus}"
         max="${this.max}"
@@ -117,6 +117,8 @@ export class NimbusDropInput extends LitElement {
   }
 
   render() {
-    return html` ${this._createInputTag()} `;
+    return html` 
+      ${styleTagHTML}
+      ${this._createInputTag()} `;
   }
 }

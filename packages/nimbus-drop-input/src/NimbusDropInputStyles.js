@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import { html, css } from 'lit';
 import { styleMap } from 'lit/directives/style-map.js';
 
 export const cssObject = css`
@@ -12,7 +12,20 @@ export const cssObject = css`
 const stylesObject = {
   '#input-tag' : { 
     fontSize: '10rem',
+    backgroundColor : 'gray'
   }
 };;
 
 export const getStyle = querySelector => styleMap(stylesObject[querySelector]);
+
+const styleRulesForComponent = `
+  #input-tag {
+    color: red
+  }
+`;
+
+export const styleTagHTML = html`
+  <style>
+    ${styleRulesForComponent}
+  </style>
+`;
